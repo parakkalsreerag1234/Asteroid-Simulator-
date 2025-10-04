@@ -1,7 +1,7 @@
 import streamlit as st
 import folium
 from streamlit_folium import st_folium
-import math
+
 
 st.set_page_config(page_title="Asteroid Impact Visualizer", layout="wide", page_icon="☄️")
 st.title(" Asteroid Impact Visualizer")
@@ -12,12 +12,12 @@ col1,col2 = st.columns([1, 1])
 with col1:
     st.subheader("Select Impact Location")
     m = folium.Map(location=[20,0],zoom_start=2)
-    map_data = st_folium(m, width=450, height=350)
+    st_data = st_folium(m, width=450, height=350)
 
     location=None
-    if map_data and map_data['last_clicked']:
-        location = map_data['last_clicked']
-        st.write("**Selected Location:**")
+    if st_data and st_data.get['last_clicked']:
+        location = st_data['last_clicked']
+        st.write("Selected Location:",location)
 
 # sliders
 with col2:
@@ -26,7 +26,12 @@ with col2:
         "Asteroid Type",
         ["D-type (Carbon-rich)", "V-type (Vestoids)", "S-type (Stony)", "M-type (Metallic)", 
          "C-type (Carbon)", "Custom"])
-    densities = {"D-type (Carbon-rich)":1300, "V-type(Vestoids)":3500, "S-type (Stony)":2700, "M-type (Metallic)":7800,"C-type (Carbon)":1700}
+    densities = {
+        "D-type (Carbon-rich)":1300,
+        "V-type(Vestoids)":3500,
+        "S-type (Stony)":2700,
+        "M-type (Metallic)":7800,
+        "C-type (Carbon)":1700}
 
     if asteroid_type == "Custom":
         density = st.number_input("Enter Custom Density (kg/m³)", min_value=1000, max_value=15000, value=7500)
@@ -44,14 +49,9 @@ with col2:
         
     calculate = st.button("🚀 Calculate Impact")
     
-
-
-
-#
-
 if calculate:
     #front end result impavt result
-    st.divider()
+    st.markdown(---)
     st.header("💥 Impact Results")
 
     st.write("Calculating results...")
